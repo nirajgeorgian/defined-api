@@ -1,0 +1,40 @@
+const MongoClient = require('mongodb').MongoClient
+const config = require('../config/')
+const collection = require('../helper/mongoClient')
+const helperUrl = require('../helper/fetchApi')
+
+exports.get = function(req, res, next) {
+  res.render('pages/schema')
+}
+
+exports.getSchema = (req, res, next) => {
+  const SchemaName = req.params.schema
+  const url = `${req.protocol}://${req.get('host')}/user/api/${SchemaName}`
+  const docs = helperUrl.getJson(url)
+  docs
+    .then(function(data) {
+      res.render('pages/schemaObject', {
+        name: SchemaName,
+        schemaData: data
+      })
+    })
+}
+
+exports.getSchemaOne = (req, res, next) => {
+  const SchemaName = req.params.schema
+  const Id = req.params.id
+  const url = `${req.protocol}://${req.get('host')}/user/api/${SchemaName}/${Id}`
+  const docs = helperUrl.getJson(url)
+  docs
+    .then(function(data) {
+      res.render('pages/singleSchema', {
+        name: SchemaName,
+        id: Id,
+        schemaData: data
+      })
+    })
+}
+
+exports.clientHome = (req, res, next) => {
+  res.render('pages/index')
+}

@@ -24,6 +24,17 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use('/public', express.static(path.join(__dirname, 'public')))
 
+// use global database collection names
+app.use(function(req, res, next) {
+  MongoClient.connect(config.dbpath, function(err, db) {
+    db.listCollections().toArray(function(err, collections){
+      req.collections = collections;
+      console.log(collections);
+      next();
+    });
+  })
+})
+
 // require routes to handle on different endpoints
 app.use('/user', User)
 app.use('/client', Index)

@@ -5,17 +5,36 @@ const config = require('../../config/')
 exports.post = (req, res, next) => {
   console.log(req.body);
   const data = req.body;
+  console.log(data);
   MongoClient.connect(config.dbpath, function(err, db) {
     db.createCollection(data.schema, function(err, collection) {
-      collection.insert({
+      // for(let prop in data) {
+
+      // }
+      collection.insert(
       data
-    }, {safe: true}, function(err, models) {
+    , {safe: true}, function(err, models) {
        if (err) return err
        res.json(models)
      })
     })
   })
-  // res.json(req.body)
+}
+
+exports.postSingleSchema = (req, res, next) => {
+  const data = req.body
+  delete data._id
+  if(data.schema != '') {
+    MongoClient.connect(config.dbpath, function(err, db) {
+      console.log(data);
+      db.collection(data.schema).update({"_id": new ObjectID(data.newId)}, data, {upsert: true},function(err, updated) {
+        console.log(updated);
+        // res.json(updated)
+        // res.redirect(req.protocol + '://' + req.get('Host') + req.url)
+      })
+    })
+  }
+  res.json(data.schema)
 }
 
 exports.getRoute = function(req, res, next) {

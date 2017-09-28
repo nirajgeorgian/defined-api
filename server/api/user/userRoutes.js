@@ -18,6 +18,7 @@ router.route('/api/:cname')
 
 router.route('/api/:collection/:id')
   .get(User.getID)
+  .post(User.postSingleSchema)
 
 const createCollection = function(db, callback) {
   const data = req.body
