@@ -1,0 +1,30 @@
+<% include ../partials/_header %>
+<% include ../partials/_navbar.ejs %>
+
+  <div class="row justify-content-center">
+    <div class="col-md-5 col-sm-5 col-lg-5">
+      <form class="" action="/user" method="post" id="schema-form">
+        <div class="form-group">
+          <label for="schema">Define Schema</label>
+          <input type="text" class="form-control" id="schema" placeholder="Enter database Schema" name='schema'>
+          <small>Remember this will become your table name in your Database</small>
+        </div>
+        <hr>
+        <small class="text-center">You don't require any type as you can always cahnge it on the fly.</small><br>
+        <label for="#">Define Schema</label>
+        <h5 id="message" class="lead"></h5>
+        <div id="start-schema">
+          <div class="form-group">
+            <input type="text" class="form-control schema-input" id="id" placeholder="ex: ID Schema" name='id'>
+          </div>
+        </div>
+        <button class="btn btn-primary" id="add-btn">Add Another Field</button>
+        <button class="btn btn-primary" id="remove-btn">Remove Last Field</button>
+        <button class="btn btn-success" id="success-add-btn" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+
+
+
+<% include ../partials/_footer %>
