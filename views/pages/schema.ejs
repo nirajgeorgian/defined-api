@@ -5,7 +5,7 @@
     <div class="col-md-5 col-sm-5 col-lg-5">
       <form class="" action="/user" method="post" id="schema-form">
         <div class="form-group">
-          <label for="schema">Define Schema</label>
+          <label for="schema">Define Model</label>
           <input type="text" class="form-control" id="schema" placeholder="Enter database Schema" name='schema'>
           <small>Remember this will become your table name in your Database</small>
         </div>
@@ -18,6 +18,15 @@
             <input type="text" class="form-control schema-input" id="id" placeholder="ex: ID Schema" name='id'>
           </div>
         </div>
+        <select class="form-control" name="" id="select-option">
+          <option value="text">Text Value</option>
+          <option value="integer">Integer Value</option>
+          <option value="date">Date Value</option>
+          <option value="blob">Blob Value</option>
+          <option value="file">File Upload</option>
+          <option value="check-box">Check box</option>
+          <option value="radio">Radio</option>
+        </select>
         <button class="btn btn-primary" id="add-btn">Add Another Field</button>
         <button class="btn btn-primary" id="remove-btn">Remove Last Field</button>
         <button class="btn btn-success" id="success-add-btn" type="submit">Submit</button>

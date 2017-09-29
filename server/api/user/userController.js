@@ -3,14 +3,11 @@ const ObjectID = require('mongodb').ObjectID
 const config = require('../../config/')
 
 exports.post = (req, res, next) => {
-  console.log(req.body);
   const data = req.body;
-  console.log(data);
+  schema = data.schema
+  delete data.schema
   MongoClient.connect(config.dbpath, function(err, db) {
-    db.createCollection(data.schema, function(err, collection) {
-      // for(let prop in data) {
-
-      // }
+    db.createCollection(schema, function(err, collection) {
       collection.insert(
       data
     , {safe: true}, function(err, models) {

@@ -4,7 +4,15 @@ const collection = require('../helper/mongoClient')
 const helperUrl = require('../helper/fetchApi')
 
 exports.get = function(req, res, next) {
-  res.render('pages/schema')
+  res.render('pages/schema', {
+    collections: req.collections
+  })
+}
+
+exports.getModels = (req, res, next) => {
+  res.render('pages/models', {
+    collections: req.collections
+  })
 }
 
 exports.getSchema = (req, res, next) => {
@@ -15,7 +23,8 @@ exports.getSchema = (req, res, next) => {
     .then(function(data) {
       res.render('pages/schemaObject', {
         name: SchemaName,
-        schemaData: data
+        schemaData: data,
+        collections: req.collections
       })
     })
 }
@@ -30,11 +39,14 @@ exports.getSchemaOne = (req, res, next) => {
       res.render('pages/singleSchema', {
         name: SchemaName,
         id: Id,
-        schemaData: data
+        schemaData: data,
+        collections: req.collections
       })
     })
 }
 
 exports.clientHome = (req, res, next) => {
-  res.render('pages/index')
+  res.render('pages/index', {
+    collections: req.collections
+  })
 }

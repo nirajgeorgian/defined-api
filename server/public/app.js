@@ -1,16 +1,58 @@
+function createElement(inputtype) {
+  const divElement = document.createElement('div')
+  divElement.className = 'form-group'
+  const inputElement = document.createElement('input')
+  inputElement.type = inputtype
+  inputElement.className = 'form-control schema-input'
+  inputElement.placeholder = 'Change to your Schema'
+  divElement.appendChild(inputElement)
+  const startSchema = document.querySelector('#start-schema')
+  startSchema.appendChild(divElement)
+}
+
+function createTextArea() {
+  const divElement = document.createElement('div')
+  divElement.className = 'form-group'
+  const inputElement = document.createElement('textarea')
+  inputElement.className = 'form-control schema-input'
+  inputElement.rows = 7
+  inputElement.placeholder = 'Change to your Schema'
+  divElement.appendChild(inputElement)
+  const startSchema = document.querySelector('#start-schema')
+  startSchema.appendChild(divElement)
+}
+
 const addBtn = document.getElementById('add-btn')
 if(addBtn) {
   addBtn.addEventListener('click', function(event) {
     event.preventDefault()
-    const divElement = document.createElement('div')
-    divElement.className = 'form-group'
-    const inputElement = document.createElement('input')
-    inputElement.type = 'text'
-    inputElement.className = 'form-control schema-input'
-    inputElement.placeholder = 'Change to your Schema'
-    divElement.appendChild(inputElement)
-    const startSchema = document.querySelector('#start-schema')
-    startSchema.appendChild(divElement)
+    const selectOption = document.querySelector('#select-option').value
+    switch(selectOption) {
+      case 'text':
+        createElement('text')
+        break;
+      case 'integer':
+        createElement('number')
+        break;
+      case 'date':
+        createElement('date')
+        break;
+      case 'blob':
+        createTextArea()
+        break;
+      case 'file':
+        createElement('file')
+        break;
+      case 'check-box':
+        createElement('checkbox')
+        break;
+      case 'radio':
+        createElement('radio')
+        break;
+      default:
+        createElement('text')
+        break;
+    }
   });
 }
 
@@ -89,10 +131,41 @@ if(formElem) {
 }
 
 const singleSchemaForm = document.querySelector('#singleSchemaForm')
-console.log(singleSchemaForm);
 if(singleSchemaForm) {
   singleSchemaForm.addEventListener('submit', function(event) {
     event.preventDefault()
     handleAjax(singleSchemaForm, singleSchemaForm.action, '/user')
+  })
+}
+
+const allModels = document.querySelectorAll('.schema-model')
+if(allModels) {
+  Array.from(allModels).forEach(model => {
+    const oldData = model.value
+    model.addEventListener('keypress', function(event) {
+      if(event.which == 13 || event.keyCode == 13) {
+        const data = {
+          modelName: oldData,
+          newModelName: this.value
+        }
+        const url = `/model/api/models/${oldData}`
+        const results = sendFormData(url, JSON.stringify(data))
+        results
+          .then(function(renamed) {
+            return renamed.json()
+          })
+          .then(function(json) {
+            return false;
+          })
+          .catch(function(err) {
+            console.log(err);
+          })
+          // alter your page from here
+          const messageElem = document.querySelector('#message')
+          messageElem.innerHTML = 'Successfully renamed'
+          removeElem(messageElem)
+          this.blur()
+      }
+    })
   })
 }

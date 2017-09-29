@@ -13,6 +13,7 @@ const morgan = require('morgan')
 // internal includes || server includes
 const config = require('./config/')
 const User = require('./api/user/userRoutes')
+const Model = require('./api/model/modelRoutes')
 
 // clients includes
 const Index = require('./client/index')
@@ -29,7 +30,6 @@ app.use(function(req, res, next) {
   MongoClient.connect(config.dbpath, function(err, db) {
     db.listCollections().toArray(function(err, collections){
       req.collections = collections;
-      console.log(collections);
       next();
     });
   })
@@ -38,5 +38,6 @@ app.use(function(req, res, next) {
 // require routes to handle on different endpoints
 app.use('/user', User)
 app.use('/client', Index)
+app.use('/model', Model)
 
 module.exports = app

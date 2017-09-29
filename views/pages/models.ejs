@@ -1,0 +1,16 @@
+<% include ../partials/_header %>
+<% include ../partials/_navbar.ejs %>
+
+<div class="row justify-content-center">
+
+  <div class="col-md-4 col-sm-4">
+    <h4 id="message"></h4>
+    <% collections.forEach(function(model) { %>
+      <div class="form-group">
+        <input type="text" class="form-control schema-model" name="<%= model.name %>" value="<%= model.name %>">
+      </div>
+    <% }) %>
+  </div>
+</div>
+
+<% include ../partials/_footer %>

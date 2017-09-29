@@ -10,7 +10,10 @@ router.route('/schema')
 router.route('/schema/:schema')
   .get(controller.getSchema)
 
-  router.route('/schema/:schema/:id')
-    .get(controller.getSchemaOne)
+router.route('/schema/:schema/:id')
+  .get(controller.getSchemaOne)
+
+router.route('/models')
+  .get(controller.getModels)
 
 module.exports = router
